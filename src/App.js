@@ -2,47 +2,71 @@ import './App.css';
 import {useState, useRef, useEffect} from "react"
 
 function App() {
-  let [name, setName] = useState();
+  let [name,setName] = useState("");
+  let [place, setPlace] = useState("");
+  let [priority, setPriority] = useState(0);
 
-  let [num1, setNum1] = useState(0);
-  let [num2, setNum2] = useState(0);
-  let [total, setTotal] = useState(0);
+  let nameRef = useRef("");
+  let placeRef = useRef("");
+  let priorityRef = useRef(0);
 
-  useEffect(() => {
-    setTotal(num1+num2)
-  }, [num1, num2])
+  let [tasks, setTasks] = useState([
+    {
+      name: "Task1",
+      place: "School",
+      priority: 0
+    },
+    {
+      name: "Clean",
+      place: "House",
+      priority: 0
+    }
+  ])
 
-  let onChangeInput = (e) => {
-    setName(e.currentTarget.value)
-    console.log("onChangeInput " + e.currentTarget.value)
+  let addTask = () => {
+    let newTask = {
+      name: name,
+      place: place,
+      priority: priority
+    }
+    setTasks([...tasks, newTask])
   }
 
-  let onChangeNumber1 = (e) => {
-    setNum1(parseFloat(e.currentTarget.value))
-  }
-
-  let onChangeNumber2 = (e) => {
-    setNum2(parseFloat(e.currentTarget.value))
-  }
-
-  let onClickCalculate= () => {
-    setTotal(num1+num2)
+  let addTaskWithRefs = () => {
+    let newTask = {
+      name: nameRef.current.value,
+      place: placeRef.current.value,
+      priority: priorityRef.current.value
+    }
+    setTasks([...tasks, newTask])
+    nameRef.current.value = "";
+    placeRef.current.value = "";
+    priorityRef.current.value = "";
   }
 
   return (
-    <>
-      <div className="App">
-        <h2>Data input 1</h2>
-        <input type="text" placeholder='Your name here' onChange={onChangeInput}/>
-        <p>my name: {name}</p>
+      <div>
+        <h2>Add task</h2>
+        <input type="text" placeholder="name"></input>
+        <input type="text" placeholder="place" ></input>
+        <input type="number" placeholder="priority"></input>
+        <button onClick={addTask}> Add task </button>
 
-        <h2>Calculator</h2>
-        <input type="number" onChange={onChangeNumber1}></input>
-        <input type="number" onChange={onChangeNumber2}></input>
-        <button onClick={onClickCalculate}>Calculate</button>
-        <p>Total {num1} + {num2}: {total}</p>
+        <h2>Add tasks Ref</h2>
+        <input ref={nameRef} type="text" placeholder="name" onChange={(e) => { setName(e.currentTarget.value) }}></input>
+        <input ref={placeRef} type="text" placeholder="place" onChange={(e) => { setPlace(e.currentTarget.value) }}></input>
+        <input ref={priorityRef} type="number" placeholder="priority" onChange={(e) => { setPriority(parseInt(e.currentTarget.value)) }}></input>
+        <button onClick={addTaskWithRefs}> Add task </button>
+
+        <ul>
+          { tasks.map( t => 
+          <li>
+            <b>{t.name}</b>
+            <div>Priority: {t.priority}</div>
+            <div>{t.place}</div>
+          </li>) }
+        </ul>
       </div>
-    </>
   );
 }
 
