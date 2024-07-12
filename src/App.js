@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useRef, useEffect} from "react"
 import DetailsOfTaskComponent from './Components/DetailsOfTaskComponent';
+import ListOfTasksComponent from './Components/ListOfTasksComponent';
 
 function App() {
   let [name,setName] = useState("");
@@ -34,20 +35,10 @@ function App() {
     setPriority("");
   }
 
-  let onClickSelectedTask = (name) => {
-    let foundTask = tasks.find(t => t.name == name)
-    setTaskSelected(foundTask)
-  }
 
   return (
       <div className="container">
-        <h1>List of Tasks</h1>
-        <ul className='task-list'>
-          { tasks.map( t => 
-          <li key={t.name} onClick={ () => {onClickSelectedTask(t.name)}}>
-            {t.name}
-          </li>) }
-        </ul>
+        <ListOfTasksComponent tasks={tasks} setTaskSelected={setTaskSelected} />
 
         <div className='task-form'>
         <h2>Add task</h2>
