@@ -10,6 +10,8 @@ function App() {
   let placeRef = useRef("");
   let priorityRef = useRef(0);
 
+  let formRef = useRef();
+
   let [tasks, setTasks] = useState([
     {
       name: "Task1",
@@ -44,6 +46,16 @@ function App() {
     priorityRef.current.value = "";
   }
 
+  let addTaskWithFormRef = () => {
+    let formData = new FormData(formRef.current);
+    let newTask = {
+      name: formData.get("name"),
+      place: formData.get("place"),
+      priority: formData.get("priority")
+    }
+    setTasks([...tasks, newTask])
+  }
+
   return (
       <div>
         <h2>Add task</h2>
@@ -58,6 +70,14 @@ function App() {
         <input ref={priorityRef} type="number" placeholder="priority" onChange={(e) => { setPriority(parseInt(e.currentTarget.value)) }}></input>
         <button onClick={addTaskWithRefs}> Add task </button>
 
+        <h2>Add tasks Form Ref</h2>
+        <form ref={formRef}>
+          <input name="name" type="text" placeholder="name" onChange={(e) => { setName(e.currentTarget.value) }}></input>
+          <input name="place" type="text" placeholder="place" onChange={(e) => { setPlace(e.currentTarget.value) }}></input>
+          <input name="priority" type="number" placeholder="priority" onChange={(e) => { setPriority(parseInt(e.currentTarget.value)) }}></input>
+        </form>
+        <button onClick={addTaskWithFormRef}> Add task </button>
+        
         <ul>
           { tasks.map( t => 
           <li>
