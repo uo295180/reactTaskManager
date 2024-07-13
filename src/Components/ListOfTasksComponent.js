@@ -1,16 +1,21 @@
+import { useNavigate } from 'react-router-dom';
+
+
 let ListOfTasksComponent = (props) => {
 
     let { tasks, setTasks, setTaskSelected } = props
+    let navigate = useNavigate();
 
     let onClickSelectedTask = (name) => {
         let foundTask = tasks.find(t => t.name == name)
         setTaskSelected(foundTask)
+        navigate("/detailsTasks/" + name)
     }
     
-let onClickDeleteTask = (name) => {
-    let tasksWithout = tasks.filter(t => t.name != name)
-    setTasks(tasksWithout)
-}
+    let onClickDeleteTask = (name) => {
+        let tasksWithout = tasks.filter(t => t.name != name)
+        setTasks(tasksWithout)
+    }
 
     return (
         <div>

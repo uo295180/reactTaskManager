@@ -42,8 +42,8 @@ function App() {
           <Route path="/createTask" element={
             <CreateTaskComponent tasks={tasks} setTasks={setTasks}/>
           }></Route>
-          <Route path="/detailsTasks" element={
-            <DetailsOfTaskComponent task={taskSelected}/>
+          <Route path="/detailsTasks/:name" element={
+            <DetailsOfTaskComponent tasks={tasks}/>
           }></Route>
         </Routes>
         
