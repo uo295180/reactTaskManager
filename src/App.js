@@ -6,9 +6,6 @@ import CreateTaskComponent from './Components/CreateTaskComponent';
 import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-  
-
-  let [taskSelected, setTaskSelected] = useState({});
 
   let [tasks, setTasks] = useState([
     {
@@ -23,9 +20,6 @@ function App() {
     }
   ])
 
-  
-
-
   return (
       <div className="container">
         <n>
@@ -37,7 +31,7 @@ function App() {
         </n>
         <Routes>
           <Route path="/" element={
-            <ListOfTasksComponent setTasks={setTasks} tasks={tasks} setTaskSelected={setTaskSelected} />
+            <ListOfTasksComponent setTasks={setTasks} tasks={tasks} />
           }></Route>
           <Route path="/createTask" element={
             <CreateTaskComponent tasks={tasks} setTasks={setTasks}/>
